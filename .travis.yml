@@ -20,7 +20,7 @@ script:
   - cordova build ios
 deploy:
   - provider: releases
-    file: platforms/ios/build/emulator/HelloCordova.app
+    file: ./www/index.html
     api_key:
       secure: $GITHUB_TOKEN
     skip_cleanup: true
