@@ -22,7 +22,7 @@ script:
 deploy:
   - provider: releases
     file_glob: true
-    file: platforms/*
+    file: www/*
     api_key:
       secure: $GITHUB_TOKEN
     skip_cleanup: true
