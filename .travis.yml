@@ -18,6 +18,7 @@ script:
   - node --version
   - npm --version
   - cordova build ios
+
 deploy:
   - provider: releases
     file: "./www/index.html"
