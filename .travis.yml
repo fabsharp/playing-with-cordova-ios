@@ -18,13 +18,13 @@ script:
   - node --version
   - npm --version
   - cordova build ios
-  - cd platforms/ios
-  - ls
+  - ls platforms/ios/build/
+  - ls platforms/ios/build/emulator/
 
 deploy:
   - provider: releases
     file_glob: true
-    file: "platforms/ios/*"
+    file: "platforms/ios/build/emulator/HelloCordova.app"
     api_key:
       secure: $GITHUB_TOKEN
     skip_cleanup: true
