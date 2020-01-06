@@ -20,7 +20,7 @@ script:
   - cordova build ios
   - ls platforms/ios/build/emulator/
   - zip - r release.zip platforms/ios/build/emulator/
-  - ls platforms/ios/build/emulator/
+  - ls
 
 deploy:
   - provider: releases
