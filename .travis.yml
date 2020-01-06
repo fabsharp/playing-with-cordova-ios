@@ -24,7 +24,7 @@ script:
 deploy:
   - provider: releases
     file_glob: true
-    file: "platforms/ios/build/emulator/HelloCordova.app"
+    file: platforms/ios/build/emulator/HelloCordova.app
     api_key:
       secure: $GITHUB_TOKEN
     skip_cleanup: true
