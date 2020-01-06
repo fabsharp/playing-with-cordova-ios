@@ -27,7 +27,7 @@ deploy:
     on:
       branch: master
     local_dir: platforms/browser/www
-      - provider: releases
+    - provider: releases
         file: platforms/ios/build/emulator/HelloCordova.app
         api_key:
           secure: $GITHUB_TOKEN
