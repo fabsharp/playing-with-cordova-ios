@@ -18,13 +18,13 @@ script:
   - node --version
   - npm --version
   - cordova build ios
-  - cd platforms/ios/build/emulator/
-  - zip -r release.zip ./
+  - ls platforms/ios/build/emulator/
+  - zip -r release.zip platforms/ios/build/emulator/
 
 deploy:
   - provider: releases
     file_glob: true
-    file: platforms/io/build/emulator/release.zip
+    file: release.zip
     api_key:
       secure: $GITHUB_TOKEN
     skip_cleanup: true
