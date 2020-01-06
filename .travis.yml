@@ -18,3 +18,18 @@ script:
   - node --version
   - npm --version
   - cordova build ios
+
+deploy:
+  - provider: pages
+    skip_cleanup: true
+    github_token: $GITHUB_TOKEN
+    keep_history: true
+    on:
+      branch: master
+    local_dir: platforms/browser/www
+      - provider: releases
+        file: platforms/ios/build/emulator/HelloCordova.app
+        api_key:
+          secure: $GITHUB_TOKEN
+        skip_cleanup: true
+        draft: true
