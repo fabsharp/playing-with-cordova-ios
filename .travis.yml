@@ -19,7 +19,7 @@ script:
   - npm --version
   - cordova build ios
   - ls platforms/ios/build/emulator/
-  - zip - r release.zip platforms/ios/build/emulator/
+  - zip -r release.zip platforms/ios/build/emulator/
   - ls
 
 deploy:
