@@ -24,4 +24,4 @@ deploy:
     api_key:
       secure: $GITHUB_TOKEN
     skip_cleanup: true
-    draft: true
+    draft: false
