@@ -18,14 +18,21 @@ script:
   - node --version
   - npm --version
   - cordova build ios
-  - ls platforms/ios/build/emulator/
   - zip -r release.zip platforms/ios/build/emulator/
+  - mkdir Payload
+  - cp -avr /plaforms/io/build/emulator/HelloCordova.app /Payload
+  - ls /Payload
+  - zip -r HelloCordova.zip /Payload
+  - mv HelloCordova.zip HelloCordova.ipa
+  - ls
 
 deploy:
   - provider: releases
     file_glob: true
-    file: release.zip
-    name: release-ios.zip
+    file:
+      - release.zip
+      - HelloCordova.ipa
+    name: release-ios
     api_key:
       secure: $GITHUB_TOKEN
     skip_cleanup: true
