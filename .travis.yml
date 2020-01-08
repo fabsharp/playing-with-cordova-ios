@@ -54,8 +54,13 @@ matrix:
       android:
         components:
           - tools
+          - platform-tools
           - build-tools-$ANDROID_BUILD_TOOLS_VERSION
           - android-$ANDROID_API_LEVEL
+          - extra-android-m2repository
+          - extra-google-m2repository
+          - extra-android-support
+          - extra-google-google_play_services
       before_install:
         - nvm install $nodejs_version
         - node --version
