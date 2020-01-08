@@ -30,4 +30,5 @@ deploy:
       secure: $GITHUB_TOKEN
     skip_cleanup: true
     on:
+      tag: true
       all_branches: true
