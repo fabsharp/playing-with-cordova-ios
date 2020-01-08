@@ -1,42 +1,80 @@
-language: objective-c
-osx_image: xcode9.4
-sudo: false
+matrix:
+  include:
+    - language: objective-c
+      osx_image: xcode9.4
+      sudo: false
+      env:
+        - TRAVIS_NODE_VERSION: 12
+      before_install:
+        - nvm install $TRAVIS_NODE_VERSION
+      install:
+        - npm install -g cordova@latest
+        - npm install
+      before_script:
+        - cordova platform add ios
+      script:
+        - node --version
+        - npm --version
+        - cordova build ios
+        - zip -r release.zip platforms/ios/build/emulator/
+        - mkdir Payload
+        - cd Payload
+        - mkdir HelloCordova.app
+        - cd ..
+        - cp -r platforms/ios/build/emulator/HelloCordova.app/ Payload/HelloCordova.app/
+        - ls Payload/
+        - zip -r HelloCordova.zip Payload
+        - mv HelloCordova.zip HelloCordova.ipa
+        - ls
+      deploy:
+        - provider: releases
+          file_glob: true
+          file:
+            - release.zip
+            - HelloCordova.ipa
+          name: release-ios
+          api_key:
+            secure: $GITHUB_TOKEN
+          skip_cleanup: true
+          draft: true
+    - sudo: false
+      # NOTE: dist is added here to ensure that Travis CI works consistently
+      # on Node.js 12. It is desired to remove it once this issue is resolved
+      # or otherwise goes away.
+      dist: trusty
+      env:
+        global:
+          - ANDROID_API_LEVEL=28
+          - ANDROID_BUILD_TOOLS_VERSION=28.0.3
+          - TERM=dumb # Keep gradle from crapping all over the log
+          - nodejs_version=12
 
-env:
-  - TRAVIS_NODE_VERSION: 12
-
-before_install:
-  - nvm install $TRAVIS_NODE_VERSION
-
-install:
-  - npm install -g cordova@latest
-  - npm install
-
-before_script:
-  - cordova platform add ios
-script:
-  - node --version
-  - npm --version
-  - cordova build ios
-  - zip -r release.zip platforms/ios/build/emulator/
-  - mkdir Payload
-  - cd Payload
-  - mkdir HelloCordova.app
-  - cd ..
-  - cp -r platforms/ios/build/emulator/HelloCordova.app/ Payload/HelloCordova.app/
-  - ls Payload/
-  - zip -r HelloCordova.zip Payload
-  - mv HelloCordova.zip HelloCordova.ipa
-  - ls
-
-deploy:
-  - provider: releases
-    file_glob: true
-    file:
-      - release.zip
-      - HelloCordova.ipa
-    name: release-ios
-    api_key:
-      secure: $GITHUB_TOKEN
-    skip_cleanup: true
-    draft: true
+      language: android
+      jdk:
+        - oraclejdk8
+      android:
+        components:
+          - tools
+          - build-tools-$ANDROID_BUILD_TOOLS_VERSION
+          - android-$ANDROID_API_LEVEL
+        licenses:
+          - 'android-sdk-preview-license-.+'
+          - 'android-sdk-license-.+'
+          - 'google-gdk-license-.+'
+      before_install:
+        - nvm install $nodejs_version
+        - node --version
+        - npm --version
+        - gradle --version
+      install:
+        - npm install
+      before_script:
+        - npm install -g cordova
+        - cordova platform add android
+      script:
+        - cordova build android
+      deploy:
+        - provider: releases
+          file: platforms/android/app/build/outputs/apk/debug/app-debug.apk
+          skip_cleanup: true
+          draft: true
