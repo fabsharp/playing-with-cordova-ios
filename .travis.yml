@@ -44,21 +44,21 @@ matrix:
         global:
           - TERM=dumb # Keep gradle from crapping all over the log
           - nodejs_version=12
+      licenses:
+        - 'android-sdk-preview-license-.+'
+        - 'android-sdk-license-.+'
+        - 'google-gdk-license-.+'
       android:
         components:
           - tools
           - platform-tools
-          - build-tools-25.0.3
-          - android-25
-          - sys-img-armeabi-v7a-google_apis-25
+          - build-tools-28.0.3
+          - android-28
           - extra-android-m2repository
           - extra-google-m2repository
           - extra-android-support
           - extra-google-google_play_services
-        licenses:
-          - 'android-sdk-preview-license-.+'
-          - 'android-sdk-license-.+'
-          - 'google-gdk-license-.+'
+
       before_install:
         - touch $HOME/.android/repositories.cfg
         - nvm install $nodejs_version
