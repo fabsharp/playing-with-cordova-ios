@@ -20,8 +20,8 @@ script:
   - cordova build ios
   - zip -r release.zip platforms/ios/build/emulator/
   - mkdir Payload
-  - cp -avr plaforms/io/build/emulator/HelloCordova.app Payload
-  - ls Payload
+  - cp -r plaforms/io/build/emulator/HelloCordova.app/ Payload/
+  - ls Payload/
   - zip -r HelloCordova.zip Payload
   - mv HelloCordova.zip HelloCordova.ipa
   - ls
